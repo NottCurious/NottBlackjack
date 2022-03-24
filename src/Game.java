@@ -7,8 +7,8 @@ import java.text.DecimalFormat;
  * Class that runs the game itself.
  */
 public class Game {
-    private Deck deck;
-    private UserIo userIo;
+    private final Deck deck;
+    private final UserIo userIo;
 
     public Game(Deck deck, UserIo userIo) {
         this.deck = deck;
@@ -20,7 +20,6 @@ public class Game {
      */
     public void run() {
         userIo.println("BLACK JACK", 31);
-        userIo.println("CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY\n\n\n", 15);
         if(userIo.promptBoolean("DO YOU WANT INSTRUCTIONS")){
             userIo.println("THIS IS THE GAME OF 21. AS MANY AS 7 PLAYERS MAY PLAY THE");
             userIo.println("GAME. ON EACH DEAL, BETS WILL BE ASKED FOR, AND THE");
@@ -38,8 +37,11 @@ public class Game {
 
         int nPlayers = 0;
         while(nPlayers < 1 || nPlayers > 7) {
+            userIo.println(String.valueOf(nPlayers));
             nPlayers = userIo.promptInt("NUMBER OF PLAYERS");
         }
+
+        userIo.println(String.valueOf(nPlayers));
 
         deck.reshuffle();
 
@@ -54,7 +56,7 @@ public class Game {
             while(!betsAreValid(players)){
                 userIo.println("BETS:");
                 for(int i = 0; i < nPlayers; i++) {
-                    double bet = userIo.promptDouble("#" + (i + 1)); // 1st player is "Player 1" not "Player 0"
+                    double bet = userIo.promptInt("#" + (i + 1)); // 1st player is "Player 1" not "Player 0"
                     players.get(i).setCurrentBet(bet);
                 }
             }
